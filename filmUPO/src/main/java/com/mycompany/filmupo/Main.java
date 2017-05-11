@@ -110,7 +110,6 @@ public class Main extends UI {
             final ExternalResource externalResource = new ExternalResource(p.getImagen());
             portada.setSource(externalResource);
             portada.setWidth("230");
-
             table.addItem(new Object[]{portada, p.getTitulo(), p.getAnio(), p.getPais(), p.getDuracion()}, p.getIdPelicula());
         }
 
@@ -136,7 +135,7 @@ public class Main extends UI {
                 window.setWidth(700.0f, Sizeable.Unit.PIXELS);
                 final FormLayout content = new FormLayout();
                 Label datos = new Label(
-                        "<b>Informacion:</b> Pelicula del " + p.getAnio() + "," + p.getDuracion() + "min.," + p.getPais() + "<br>"
+                        "Pelicula del " + p.getAnio() + "," + p.getDuracion() + "min.," + p.getPais() + "<br>"
                         + "<b>Genero:</b> " + p.getGenero() + "<br>"
                         + "<b>Director:</b> " + d.getNombreCompleto() + "<br>"
                         + "<b>Titulo orginal:</b> " + p.getTitulo() + "<br>"
@@ -194,7 +193,7 @@ public class Main extends UI {
                     Image portada = new Image();
                     final ExternalResource externalResource = new ExternalResource(p.getImagen());
                     portada.setSource(externalResource);
-                    portada.setWidth("180");
+                    portada.setWidth("230");
                     table2.addItem(new Object[]{portada, p.getTitulo(), p.getAnio(), p.getPais(), p.getDuracion()}, p.getIdPelicula());
                 }
 
@@ -222,7 +221,7 @@ public class Main extends UI {
                         window.setWidth(700.0f, Sizeable.Unit.PIXELS);
                         final FormLayout content = new FormLayout();
                         Label datos = new Label(
-                                "<b>Informacion:</b> Pelicula del " + p.getAnio() + "," + p.getDuracion() + "min.," + p.getPais() + "<br>"
+                                "Pelicula del " + p.getAnio() + "," + p.getDuracion() + "min.," + p.getPais() + "<br>"
                                 + "<b>Genero:</b> " + p.getGenero() + "<br>"
                                 + "<b>Director:</b> " + d.getNombreCompleto() + "<br>"
                                 + "<b>Titulo orginal:</b> " + p.getTitulo() + "<br>"
