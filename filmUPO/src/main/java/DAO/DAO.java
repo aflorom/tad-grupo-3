@@ -1,6 +1,4 @@
-
 package DAO;
-
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,9 +15,8 @@ import mapping.Director;
 import mapping.Pelicula;
 
 public class DAO {
-    
-    private Connection conn;
 
+    private Connection conn;
 
     public DAO() {
         this.conn = null;
@@ -34,9 +31,9 @@ public class DAO {
     }
 
     public void abrirConexion() throws InstantiationException, IllegalAccessException {
-        String login = "root";
-        String password = "";
-        String url = "jdbc:mysql://localhost/filmupo";
+        String login = "u311399954_tad";
+        String password = "tadbbdd";
+        String url = "jdbc:mysql://mysql.hostinger.es/311399954_tad";
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -49,7 +46,6 @@ public class DAO {
     public void cerrarConexion() throws SQLException {
         this.getConn().close();
     }
-
 
     public List<Pelicula> consultarPeliculas() throws SQLException {
         List<Pelicula> listaPeliculas = new ArrayList();
@@ -104,7 +100,6 @@ public class DAO {
         return d;
     }
 
-
     public List<Actor> devolverActores(int idPelicula) throws SQLException {
         List<Actor> listaActores = new ArrayList();
         Statement stmt = this.getConn().createStatement();
@@ -120,9 +115,8 @@ public class DAO {
         return listaActores;
     }
 
-
     public List<Pelicula> busqueda(String patron) throws SQLException {
-        
+
         List<Pelicula> listaPeliculas = new ArrayList();
         Statement stmt = this.getConn().createStatement();
         ResultSet res = stmt.executeQuery("SELECT * FROM pelicula WHERE titulo LIKE '%" + patron + "%' or genero LIKE '%" + patron + "%' or pais LIKE '%" + patron + "%'");
@@ -135,7 +129,6 @@ public class DAO {
         return listaPeliculas;
     }
 
-
     public Pelicula devolverPelicula(Integer idPelicula) throws SQLException {
         Pelicula p = null;
         Statement stmt = this.getConn().createStatement();
@@ -147,7 +140,6 @@ public class DAO {
         stmt.close();
         return p;
     }
-
 
     public List<Pelicula> filtradoCompleto(Object idDirector, Object idActor) throws SQLException {
         List<Pelicula> listaPeliculas = new ArrayList();
@@ -162,7 +154,6 @@ public class DAO {
         return listaPeliculas;
     }
 
-
     public List<Pelicula> filtradoDirector(Object idDirector) throws SQLException {
         List<Pelicula> listaPeliculas = new ArrayList();
         Statement stmt = this.getConn().createStatement();
@@ -175,7 +166,6 @@ public class DAO {
         stmt.close();
         return listaPeliculas;
     }
-
 
     public List<Pelicula> filtradoActor(Object idActor) throws SQLException {
         List<Pelicula> listaPeliculas = new ArrayList();
@@ -196,13 +186,11 @@ public class DAO {
         preparedStatement.executeUpdate();
     }
 
-    
     public void actualizarActor(int idActor, String nombre, String apellidos) throws SQLException {
         String updateTableSQL = "UPDATE actor SET nombre='" + nombre + "', apellidos='" + apellidos + "' WHERE idActor='" + idActor + "'";
         PreparedStatement preparedStatement = this.getConn().prepareStatement(updateTableSQL);
         preparedStatement.executeUpdate();
     }
-
 
     public void actualizarDirector(int idDirector, String nombre, String apellidos) throws SQLException {
         String updateTableSQL = "UPDATE director SET nombre='" + nombre + "', apellidos='" + apellidos + "' WHERE idDirector = '" + idDirector + "'";
@@ -219,7 +207,6 @@ public class DAO {
         preparedStatement = this.getConn().prepareStatement(deleteSQL);
         retorno = preparedStatement.executeUpdate();
     }
-
 
     public void eliminarActor(int idActor) throws SQLException {
         String deleteSQL = "DELETE FROM actorpelicula WHERE idActor='" + idActor + "'";
@@ -247,7 +234,6 @@ public class DAO {
         retorno = preparedStatement.executeUpdate();
     }
 
-
     public int insertarPelicula(Object idDirector, String titulo, int anio, String pais, String genero, String sinopsis, int duracion, String imagen) throws SQLException {
         String SQL = "INSERT INTO pelicula VALUES (0, '" + idDirector + "', '" + titulo + "', "
                 + "'" + anio + "', '" + pais + "', '" + genero + "', '" + sinopsis + "', '" + duracion + "', "
@@ -263,7 +249,6 @@ public class DAO {
         return res;
     }
 
-
     public void insertarActorPelicula(Collection idsActores, int idPelicula) throws SQLException {
         for (Iterator it = idsActores.iterator(); it.hasNext();) {
             int idActor = (int) it.next();
@@ -273,20 +258,17 @@ public class DAO {
         }
     }
 
-
     public void insertarActor(String nombre, String apellidos) throws SQLException {
         String SQL = "INSERT INTO actor VALUES (0, '" + nombre + "', '" + apellidos + "')";
         PreparedStatement preparedStatement = this.getConn().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         int retorno = preparedStatement.executeUpdate();
     }
 
-
     public void insertarDirector(String nombre, String apellidos) throws SQLException {
         String SQL = "INSERT INTO director VALUES (0, '" + nombre + "', '" + apellidos + "')";
         PreparedStatement preparedStatement = this.getConn().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         int retorno = preparedStatement.executeUpdate();
     }
-
 
     public int numPeliculasA(Integer idActor) throws SQLException {
         int num = 0;
@@ -300,7 +282,6 @@ public class DAO {
         return num;
     }
 
-
     public int numGeneros(String genero) throws SQLException {
         int num = 0;
         Statement stmt = this.getConn().createStatement();
@@ -312,7 +293,6 @@ public class DAO {
         stmt.close();
         return num;
     }
-
 
     public int numPeliculasD(Integer idDirector) throws SQLException {
         int num = 0;
