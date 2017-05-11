@@ -1,4 +1,3 @@
-
 package com.mycompany.filmupo;
 
 import DAO.DAO;
@@ -61,7 +60,7 @@ public class Administracion extends UI {
             final VerticalSplitPanel v2 = new VerticalSplitPanel();
             v2.addComponent(v2h2);
             v2.addComponent(v2h1);
-            v2.setSplitPosition(10, Sizeable.Unit.PERCENTAGE);
+            v2.setSplitPosition(22, Sizeable.Unit.PERCENTAGE);
             v2.setLocked(true);
 
             VerticalLayout v1 = new VerticalLayout();
@@ -70,7 +69,7 @@ public class Administracion extends UI {
             HorizontalSplitPanel layout = new HorizontalSplitPanel();
             layout.addComponent(v1);
             layout.addComponent(v2);
-            layout.setSplitPosition(30, Sizeable.Unit.PERCENTAGE);
+            layout.setSplitPosition(28, Sizeable.Unit.PERCENTAGE);
 
             setContent(layout);
 
@@ -461,4 +460,3 @@ public class Administracion extends UI {
     public static class MyUIServlet extends VaadinServlet {
     }
 }
-
