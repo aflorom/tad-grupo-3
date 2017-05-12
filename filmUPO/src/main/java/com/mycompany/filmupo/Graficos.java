@@ -77,7 +77,7 @@ public class Graficos extends UI {
             final VerticalSplitPanel v2 = new VerticalSplitPanel();
             v2.addComponent(v2h2);
             v2.addComponent(v2h1);
-            v2.setSplitPosition(10, Unit.PERCENTAGE);
+            v2.setSplitPosition(22, Unit.PERCENTAGE);
             v2.setLocked(true);
 
             VerticalLayout v1 = new VerticalLayout();
@@ -86,11 +86,11 @@ public class Graficos extends UI {
             HorizontalSplitPanel layout = new HorizontalSplitPanel();
             layout.addComponent(v1);
             layout.addComponent(v2);
-            layout.setSplitPosition(30, Unit.PERCENTAGE);
+            layout.setSplitPosition(28, Unit.PERCENTAGE);
 
             setContent(layout);
-            //Creamos los 3 links de navegacion de la aplicacion y loa añadimos al layout declarado al principio del codigo
 
+            //Creamos los 3 links de navegacion de la aplicacion y loa añadimos al layout declarado al principio del codigo
             Link pri = new Link("Principal", new ExternalResource("/Principal"));
             Link est = new Link("Graficos", new ExternalResource("/Graficos"));
             Link adm = new Link("Administración", new ExternalResource("/Admin"));

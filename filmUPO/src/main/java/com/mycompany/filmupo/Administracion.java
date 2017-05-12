@@ -164,7 +164,6 @@ public class Administracion extends UI {
                             final ComboBox director = new ComboBox("Director", bdir);
                             director.setItemCaptionPropertyId("nombreCompleto");
                             dao.abrirConexion();
-                            //director.setInputPrompt(dao.devolverDirector(8).getNombreCompleto());
                             v2h1.addComponent(director);
 
                             //Seleccion de actores

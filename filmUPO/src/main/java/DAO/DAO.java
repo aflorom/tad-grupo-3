@@ -32,14 +32,11 @@ public class DAO {
 
     public void abrirConexion() throws InstantiationException, IllegalAccessException {
 
-//Conexion con BBDD utilizando JDBC
-//        String login = "root";
-//        String password = "";
-//        String url = "jdbc:mysql://localhost/filmupo";
+        //Conexion con BBDD utilizando JDBC
+        String login = "root";
+        String password = "";
+        String url = "jdbc:mysql://localhost/filmupo";
 
-        String login = "u311399954_tad";
-        String password = "tadbbdd";
-        String url = "jdbc:mysql://mysql.hostinger.es/311399954_tad";
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             this.setConn(DriverManager.getConnection(url, login, password));
@@ -152,48 +149,6 @@ public class DAO {
         res.close();
         stmt.close();
         return p;
-    }
-
-    //Metodo para devolver un listado de peliculas dado tanto el identificador de director como el de actor
-    public List<Pelicula> filtradoCompleto(Object idDirector, Object idActor) throws SQLException {
-        List<Pelicula> listaPeliculas = new ArrayList();
-        Statement stmt = this.getConn().createStatement();
-        ResultSet res = stmt.executeQuery("SELECT * FROM filmUPO.pelicula P join filmUPO.actorpelicula A on P.idPelicula=A.idPelicula and A.idActor LIKE '" + idActor + "' and P.idDirector LIKE '" + idDirector + "'");
-        while (res.next()) {
-            Pelicula p = new Pelicula(Integer.parseInt(res.getString("idPelicula")), Integer.parseInt(res.getString("idDirector")), res.getString("titulo"), Integer.parseInt(res.getString("anio")), res.getString("pais"), res.getString("genero"), res.getString("sinopsis"), Integer.parseInt(res.getString("duracion")), res.getString("imagen"));
-            listaPeliculas.add(p);
-        }
-        res.close();
-        stmt.close();
-        return listaPeliculas;
-    }
-
-    //Metodo para devolver una lista de peliculas dado el identificador del director
-    public List<Pelicula> filtradoDirector(Object idDirector) throws SQLException {
-        List<Pelicula> listaPeliculas = new ArrayList();
-        Statement stmt = this.getConn().createStatement();
-        ResultSet res = stmt.executeQuery("SELECT * FROM pelicula WHERE idDirector LIKE '" + idDirector + "'");
-        while (res.next()) {
-            Pelicula p = new Pelicula(Integer.parseInt(res.getString("idPelicula")), Integer.parseInt(res.getString("idDirector")), res.getString("titulo"), Integer.parseInt(res.getString("anio")), res.getString("pais"), res.getString("genero"), res.getString("sinopsis"), Integer.parseInt(res.getString("duracion")), res.getString("imagen"));
-            listaPeliculas.add(p);
-        }
-        res.close();
-        stmt.close();
-        return listaPeliculas;
-    }
-
-    //Metodo para devolver un listado de peliculas dado el identificador de un actor
-    public List<Pelicula> filtradoActor(Object idActor) throws SQLException {
-        List<Pelicula> listaPeliculas = new ArrayList();
-        Statement stmt = this.getConn().createStatement();
-        ResultSet res = stmt.executeQuery("SELECT * FROM filmUPO.pelicula P join filmUPO.actorpelicula A on P.idPelicula=A.idPelicula and A.idActor LIKE '" + idActor + "'");
-        while (res.next()) {
-            Pelicula p = new Pelicula(Integer.parseInt(res.getString("idPelicula")), Integer.parseInt(res.getString("idDirector")), res.getString("titulo"), Integer.parseInt(res.getString("anio")), res.getString("pais"), res.getString("genero"), res.getString("sinopsis"), Integer.parseInt(res.getString("duracion")), res.getString("imagen"));
-            listaPeliculas.add(p);
-        }
-        res.close();
-        stmt.close();
-        return listaPeliculas;
     }
 
     //Metodo para actualizar pelicula dado su identificador y sus demas atributos
