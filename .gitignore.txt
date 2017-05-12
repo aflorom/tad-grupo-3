@@ -1,7 +1,2 @@
-.project
-.classpath
-.DS_Store
-.project
-.settings
-target*
-test-output*
+*/target/*
+README.md

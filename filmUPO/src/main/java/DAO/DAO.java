@@ -31,15 +31,15 @@ public class DAO {
     }
 
     public void abrirConexion() throws InstantiationException, IllegalAccessException {
-//        String login = "u311399954_tad";
-//        String password = "tadbbdd";
-//        String url = "jdbc:mysql://mysql.hostinger.es/311399954_tad";
 
 //Conexion con BBDD utilizando JDBC
-        String login = "root";
-        String password = "";
-        String url = "jdbc:mysql://localhost/filmupo";
+//        String login = "root";
+//        String password = "";
+//        String url = "jdbc:mysql://localhost/filmupo";
 
+        String login = "u311399954_tad";
+        String password = "tadbbdd";
+        String url = "jdbc:mysql://mysql.hostinger.es/311399954_tad";
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             this.setConn(DriverManager.getConnection(url, login, password));
