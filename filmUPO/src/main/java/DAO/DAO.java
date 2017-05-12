@@ -31,9 +31,14 @@ public class DAO {
     }
 
     public void abrirConexion() throws InstantiationException, IllegalAccessException {
-        String login = "u311399954_tad";
-        String password = "tadbbdd";
-        String url = "jdbc:mysql://mysql.hostinger.es/311399954_tad";
+//        String login = "u311399954_tad";
+//        String password = "tadbbdd";
+//        String url = "jdbc:mysql://mysql.hostinger.es/311399954_tad";
+
+//Conexion con BBDD utilizando JDBC
+        String login = "root";
+        String password = "";
+        String url = "jdbc:mysql://localhost/filmupo";
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -43,10 +48,12 @@ public class DAO {
         }
     }
 
+    //Metodo para cerrar conexion BBDD
     public void cerrarConexion() throws SQLException {
         this.getConn().close();
     }
 
+    //Metodo para la consulta de todas las peliculas de la BBDD
     public List<Pelicula> consultarPeliculas() throws SQLException {
         List<Pelicula> listaPeliculas = new ArrayList();
         Statement stmt = this.getConn().createStatement();
@@ -60,6 +67,7 @@ public class DAO {
         return listaPeliculas;
     }
 
+    //Metodo para la consulta de todos los directores de la BBDD
     public List<Director> consultarDirectores() throws SQLException {
         final List<Director> listaDirectores = new ArrayList();
         Statement stmt = this.getConn().createStatement();
@@ -73,6 +81,7 @@ public class DAO {
         return listaDirectores;
     }
 
+    //Metodo para la consula de todos los actores de la BBDD
     public List<Actor> consultarActores() throws SQLException {
         List<Actor> listaActores = new ArrayList();
         Statement stmt = this.getConn().createStatement();
@@ -86,6 +95,7 @@ public class DAO {
         return listaActores;
     }
 
+    //Metodo para obtener un Director exacto segun su ID
     public Director devolverDirector(Integer idDirector) throws SQLException {
         Director d = null;
         Statement stmt = this.getConn().createStatement();
@@ -100,6 +110,7 @@ public class DAO {
         return d;
     }
 
+    //Metodo para devolver los actores dado el identificador de una pelicula
     public List<Actor> devolverActores(int idPelicula) throws SQLException {
         List<Actor> listaActores = new ArrayList();
         Statement stmt = this.getConn().createStatement();
@@ -115,6 +126,7 @@ public class DAO {
         return listaActores;
     }
 
+    //Metodo para la busqueda de peliculas segun un String pasado por el usuario
     public List<Pelicula> busqueda(String patron) throws SQLException {
 
         List<Pelicula> listaPeliculas = new ArrayList();
@@ -129,6 +141,7 @@ public class DAO {
         return listaPeliculas;
     }
 
+    //Metodo para devolver una pelicula exacta dado su identificador
     public Pelicula devolverPelicula(Integer idPelicula) throws SQLException {
         Pelicula p = null;
         Statement stmt = this.getConn().createStatement();
@@ -141,6 +154,7 @@ public class DAO {
         return p;
     }
 
+    //Metodo para devolver un listado de peliculas dado tanto el identificador de director como el de actor
     public List<Pelicula> filtradoCompleto(Object idDirector, Object idActor) throws SQLException {
         List<Pelicula> listaPeliculas = new ArrayList();
         Statement stmt = this.getConn().createStatement();
@@ -154,6 +168,7 @@ public class DAO {
         return listaPeliculas;
     }
 
+    //Metodo para devolver una lista de peliculas dado el identificador del director
     public List<Pelicula> filtradoDirector(Object idDirector) throws SQLException {
         List<Pelicula> listaPeliculas = new ArrayList();
         Statement stmt = this.getConn().createStatement();
@@ -167,6 +182,7 @@ public class DAO {
         return listaPeliculas;
     }
 
+    //Metodo para devolver un listado de peliculas dado el identificador de un actor
     public List<Pelicula> filtradoActor(Object idActor) throws SQLException {
         List<Pelicula> listaPeliculas = new ArrayList();
         Statement stmt = this.getConn().createStatement();
@@ -180,24 +196,28 @@ public class DAO {
         return listaPeliculas;
     }
 
+    //Metodo para actualizar pelicula dado su identificador y sus demas atributos
     public void actualizarPelicula(int idPelicula, String titulo, int anio, String pais, String genero, String sinopsis, int duracion, String imagen) throws SQLException {
         String updateTableSQL = "UPDATE pelicula SET titulo='" + titulo + "', anio='" + anio + "', pais ='" + pais + "', genero='" + genero + "', sinopsis='" + sinopsis + "', duracion='" + duracion + "', imagen='" + imagen + "' WHERE idPelicula='" + idPelicula + "'";
         PreparedStatement preparedStatement = this.getConn().prepareStatement(updateTableSQL);
         preparedStatement.executeUpdate();
     }
 
+    //Metodo para actualizar un actor dado su identificador, actualizamos su nombre y apellidos
     public void actualizarActor(int idActor, String nombre, String apellidos) throws SQLException {
         String updateTableSQL = "UPDATE actor SET nombre='" + nombre + "', apellidos='" + apellidos + "' WHERE idActor='" + idActor + "'";
         PreparedStatement preparedStatement = this.getConn().prepareStatement(updateTableSQL);
         preparedStatement.executeUpdate();
     }
 
+    //Metodo para actualizar un director dado su identificador, nombre y apellidos
     public void actualizarDirector(int idDirector, String nombre, String apellidos) throws SQLException {
         String updateTableSQL = "UPDATE director SET nombre='" + nombre + "', apellidos='" + apellidos + "' WHERE idDirector = '" + idDirector + "'";
         PreparedStatement preparedStatement = this.getConn().prepareStatement(updateTableSQL);
         int retorno = preparedStatement.executeUpdate();
     }
 
+    //Metodo para eliminar una pelicula dado su identificador
     public void eliminarPelicula(int idPelicula) throws SQLException {
         String deleteSQL = "DELETE FROM actorpelicula WHERE idPelicula='" + idPelicula + "'";
         PreparedStatement preparedStatement = this.getConn().prepareStatement(deleteSQL);
@@ -208,6 +228,7 @@ public class DAO {
         retorno = preparedStatement.executeUpdate();
     }
 
+    //Metodo para eliminar un actor dado su identificador
     public void eliminarActor(int idActor) throws SQLException {
         String deleteSQL = "DELETE FROM actorpelicula WHERE idActor='" + idActor + "'";
         PreparedStatement preparedStatement = this.getConn().prepareStatement(deleteSQL);
@@ -218,12 +239,7 @@ public class DAO {
         retorno = preparedStatement.executeUpdate();
     }
 
-    /**
-     * Metodo que elimina un director. Elimina el director y actualiza su
-     * correspondiente pelicula con un director no definido.
-     *
-     * @param idDirector Identificador del director a eliminar
-     */
+    //Metodo para eliminar un director dado suidentificador
     public void eliminarDirector(int idDirector) throws SQLException {
         String SQL = "UPDATE pelicula SET idDirector='0' WHERE idDirector='" + idDirector + "'";
         PreparedStatement preparedStatement = this.getConn().prepareStatement(SQL);
@@ -234,6 +250,7 @@ public class DAO {
         retorno = preparedStatement.executeUpdate();
     }
 
+    //Metodo para añadir una pelicula
     public int insertarPelicula(Object idDirector, String titulo, int anio, String pais, String genero, String sinopsis, int duracion, String imagen) throws SQLException {
         String SQL = "INSERT INTO pelicula VALUES (0, '" + idDirector + "', '" + titulo + "', "
                 + "'" + anio + "', '" + pais + "', '" + genero + "', '" + sinopsis + "', '" + duracion + "', "
@@ -249,6 +266,7 @@ public class DAO {
         return res;
     }
 
+    //Metodo para añadir un actor a una pelicula
     public void insertarActorPelicula(Collection idsActores, int idPelicula) throws SQLException {
         for (Iterator it = idsActores.iterator(); it.hasNext();) {
             int idActor = (int) it.next();
@@ -258,18 +276,21 @@ public class DAO {
         }
     }
 
+    //Metodo para añadir un actor
     public void insertarActor(String nombre, String apellidos) throws SQLException {
         String SQL = "INSERT INTO actor VALUES (0, '" + nombre + "', '" + apellidos + "')";
         PreparedStatement preparedStatement = this.getConn().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         int retorno = preparedStatement.executeUpdate();
     }
 
+    //Metodo para añadir un director
     public void insertarDirector(String nombre, String apellidos) throws SQLException {
         String SQL = "INSERT INTO director VALUES (0, '" + nombre + "', '" + apellidos + "')";
         PreparedStatement preparedStatement = this.getConn().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         int retorno = preparedStatement.executeUpdate();
     }
 
+    //Metodo para obtener el numero de peliculas que ha echo un determinado actor, esto nos servira para las graficas
     public int numPeliculasA(Integer idActor) throws SQLException {
         int num = 0;
         Statement stmt = this.getConn().createStatement();
@@ -282,6 +303,7 @@ public class DAO {
         return num;
     }
 
+    //Metodo para obtener los tipos de generos de cada pelicula para utilizarlo luego en las graficas
     public int numGeneros(String genero) throws SQLException {
         int num = 0;
         Statement stmt = this.getConn().createStatement();
@@ -294,6 +316,7 @@ public class DAO {
         return num;
     }
 
+    //Metodo para obtener el numero de peliculas realizadas por un director, metodo utilizado para las graficas de estadisiticas
     public int numPeliculasD(Integer idDirector) throws SQLException {
         int num = 0;
         Statement stmt = this.getConn().createStatement();

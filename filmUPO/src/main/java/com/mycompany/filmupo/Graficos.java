@@ -67,6 +67,7 @@ public class Graficos extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         try {
+
             HorizontalLayout v2h2 = new HorizontalLayout();
             v2h2.setMargin(true);
 
@@ -88,6 +89,7 @@ public class Graficos extends UI {
             layout.setSplitPosition(30, Unit.PERCENTAGE);
 
             setContent(layout);
+            //Creamos los 3 links de navegacion de la aplicacion y loa añadimos al layout declarado al principio del codigo
 
             Link pri = new Link("Principal", new ExternalResource("/Principal"));
             Link est = new Link("Graficos", new ExternalResource("/Graficos"));
@@ -105,6 +107,11 @@ public class Graficos extends UI {
             final List<Director> listaDirectores = dao.consultarDirectores();
             final List<Actor> listaActores = dao.consultarActores();
 
+            //Creamos un unico arbol que contiene el acceso a las 4 graficas que hemos creado:
+            //  - Peliculas segun su duracion
+            //  - Peliculas segun su genero
+            //  - Numero de peliculas segun actor
+            //  - Numero de peliculas segun director
             Tree tree = new Tree("");
             String a = "Estadisticas";
             tree.addItem(a);
@@ -130,6 +137,7 @@ public class Graficos extends UI {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
                     v2h1.removeAllComponents();
+                    //Grafica de las peliculas segun su duracion
                     if (event.getProperty().getValue().toString().contains("duración")) {
                         Chart chart = new Chart(ChartType.PIE);
                         Configuration conf = chart.getConfiguration();
@@ -148,6 +156,7 @@ public class Graficos extends UI {
                         }
                         conf.addSeries(series);
                         v2h1.addComponent(chart);
+                        //Grafica de las peliculas segun su genero
                     } else if (event.getProperty().getValue().toString().contains("género")) {
                         Chart chart = new Chart(ChartType.COLUMN);
                         chart.setWidth("400px");
@@ -194,6 +203,8 @@ public class Graficos extends UI {
                         conf.addyAxis(yayis);
 
                         v2h1.addComponent(chart);
+
+                        //Grafica de las peliculas segun actor
                     } else if (event.getProperty().getValue().toString().contains("actor")) {
                         Chart chart = new Chart(ChartType.PIE);
                         Configuration conf = chart.getConfiguration();
@@ -224,6 +235,8 @@ public class Graficos extends UI {
                         conf.addSeries(series);
 
                         v2h1.addComponent(chart);
+
+                        //Grafica del numero de peliculas segun director
                     } else if (event.getProperty().getValue().toString().contains("director")) {
                         Chart chart = new Chart(ChartType.PIE);
                         Configuration conf = chart.getConfiguration();

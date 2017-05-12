@@ -73,6 +73,7 @@ public class Administracion extends UI {
 
             setContent(layout);
 
+            //Creamos los 3 links de navegacion de la aplicacion y lo añadimos al layout creado anteriormente
             Link pri = new Link("Principal", new ExternalResource("/Principal"));
             Link est = new Link("Graficos", new ExternalResource("/Graficos"));
             Link adm = new Link("Administración", new ExternalResource("/Admin"));
@@ -83,6 +84,7 @@ public class Administracion extends UI {
             v2h2.addComponent(adm);
 
             final DAO dao = new DAO();
+            //Creamos conexion con la BBDD
             dao.abrirConexion();
 
             final List<Pelicula> listaPeliculas = dao.consultarPeliculas();
@@ -92,6 +94,7 @@ public class Administracion extends UI {
             final BeanItemContainer<Director> bdir = new BeanItemContainer(Director.class, listaDirectores);
 
             Tree tree1 = new Tree("Administración:");
+            //Declaramos el primer objeto de tipo Tree para mostrar en sus hijos todas las peliculas existentes
             String pel = "Peliculas";
             tree1.addItem(pel);
             for (Pelicula p : listaPeliculas) {
@@ -100,6 +103,7 @@ public class Administracion extends UI {
                 tree1.setChildrenAllowed(p, false);
             }
             Tree tree2 = new Tree("");
+            //Declaramos el primer objeto de tipo Tree para mostrar en sus hijos todas los actores existentes
             String act = "Actores";
             tree2.addItem(act);
             for (Actor a : listaActores) {
@@ -109,6 +113,7 @@ public class Administracion extends UI {
                 tree2.setChildrenAllowed(a, false);
             }
             Tree tree3 = new Tree("");
+            //Declaramos el primer objeto de tipo Tree para mostrar en sus hijos todas los directores existentes
             String dic = "Directores";
             tree3.addItem(dic);
             for (Director d : listaDirectores) {
@@ -119,7 +124,11 @@ public class Administracion extends UI {
                     tree3.setChildrenAllowed(d, false);
                 }
             }
+
             tree1.setSelectable(true);
+            //Cuando pulsemos en algunas de las peliculas del arbol de las peliculas
+            //se mostrara la informacion de la pelicula en textfield para que pueda ser modificada por
+            //el usuario o que pueda eliminar la pelicula en cuestion
             tree1.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
@@ -172,8 +181,10 @@ public class Administracion extends UI {
                             actores.setLeftColumnCaption("Actores disponibles");
                             actores.setRightColumnCaption("Actores seleccionados");
                             v2h1.addComponent(actores);
-
+                            //Boton 'Añadir pelicula'
                             Button btnGuardarPelicula = new Button("Añadir Pelicula");
+                            //Al pulsar en el el boton de añadir pelicula llamaremos al metodo insertar pelicula 
+                            //y la insertaremos
                             btnGuardarPelicula.addClickListener(new Button.ClickListener() {
                                 @Override
                                 public void buttonClick(Button.ClickEvent event) {
@@ -223,6 +234,7 @@ public class Administracion extends UI {
                             v2h1.addComponent(portada);
 
                             Button button = new Button("Guardar");
+                            //Mensaje mostrado como tipo Notification al haber realizado exitosamente un registro
                             button.addClickListener(new Button.ClickListener() {
                                 @Override
                                 public void buttonClick(Button.ClickEvent event) {
@@ -240,8 +252,9 @@ public class Administracion extends UI {
                                 }
                             });
                             v2h1.addComponent(button);
-
+                            //Boton 'Eliminar'
                             Button btnEliminar = new Button("Eliminar");
+                            //Mensaje mostrado como tipo Notification al haber realizado exitosamente un registro
                             btnEliminar.addClickListener(new Button.ClickListener() {
                                 @Override
                                 public void buttonClick(Button.ClickEvent event) {
@@ -277,6 +290,9 @@ public class Administracion extends UI {
             });
 
             tree2.setSelectable(true);
+            //Cuando pulsemos en algunas de los actores del arbol de los actores
+            //se mostrara la informacion del actor en textfield para que pueda ser modificada por
+            //el usuario o que pueda eliminar el actor en cuestion
             tree2.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
@@ -290,8 +306,9 @@ public class Administracion extends UI {
                         final TextField apellidos = new TextField("Apellidos");
                         apellidos.setColumns(25);
                         v2h1.addComponent(apellidos);
-
+                        //Boton 'Añadir' actor
                         Button button = new Button("Añadir Actor");
+                        //Mensaje mostrado como tipo Notification al haber realizado exitosamente un registro
                         button.addClickListener(new Button.ClickListener() {
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
@@ -319,6 +336,7 @@ public class Administracion extends UI {
                         v2h1.addComponent(apellidos);
 
                         Button button = new Button("Guardar");
+                        //Mensaje mostrado como tipo Notification al haber actualizado exitosamente un registro
                         button.addClickListener(new Button.ClickListener() {
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
@@ -338,6 +356,7 @@ public class Administracion extends UI {
                         v2h1.addComponent(button);
 
                         Button btnEliminar = new Button("Eliminar");
+                        //Mensaje mostrado como tipo Notification al haber realizado exitosamente una baja
                         btnEliminar.addClickListener(new Button.ClickListener() {
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
@@ -361,6 +380,9 @@ public class Administracion extends UI {
             });
 
             tree3.setSelectable(true);
+            //Cuando pulsemos en algunas de los direcotres del arbol de los directores
+            //se mostrara la informacion del actor en textfield para que pueda ser modificada por
+            //el usuario o que pueda eliminar el director en cuestion
             tree3.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
@@ -375,6 +397,7 @@ public class Administracion extends UI {
                         v2h1.addComponent(apellidos);
 
                         Button button = new Button("Añadir Director");
+                        //Mensaje mostrado como tipo Notification al haber realizado exitosamente un registro
                         button.addClickListener(new Button.ClickListener() {
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
@@ -402,6 +425,7 @@ public class Administracion extends UI {
                         v2h1.addComponent(apellidos);
 
                         Button button = new Button("Guardar");
+                        //Mensaje mostrado como tipo Notification al haber sido actualizado exitosamente un registro
                         button.addClickListener(new Button.ClickListener() {
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
@@ -421,6 +445,7 @@ public class Administracion extends UI {
                         v2h1.addComponent(button);
 
                         Button btnEliminar = new Button("Eliminar");
+                        //Mensaje mostrado como tipo Notification al haber realizado exitosamente una baja
                         btnEliminar.addClickListener(new Button.ClickListener() {
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
@@ -442,6 +467,7 @@ public class Administracion extends UI {
                 }
             });
 
+            //Añadimos al layout los tres componentes de tipo Tree
             v1.addComponent(tree1);
             v1.addComponent(tree2);
             v1.addComponent(tree3);

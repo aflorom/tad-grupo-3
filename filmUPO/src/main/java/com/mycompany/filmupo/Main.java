@@ -41,11 +41,14 @@ public class Main extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
+        //Layout para el campo busqueda
         HorizontalLayout h1v1 = new HorizontalLayout();
         h1v1.setMargin(true);
+        //Layout para el campo con los links
         HorizontalLayout h1v2 = new HorizontalLayout();
         h1v2.setMargin(true);
 
+        //Panel para almacenar los dos anteriores layout
         final HorizontalSplitPanel h1 = new HorizontalSplitPanel();
         h1.addComponent(h1v1);
         h1.addComponent(h1v2);
@@ -53,6 +56,7 @@ public class Main extends UI {
 
         h1.setLocked(true);
 
+        //Layout que contendra la tabla
         final HorizontalLayout h2 = new HorizontalLayout();
         h2.setMargin(true);
 
@@ -71,17 +75,20 @@ public class Main extends UI {
 
         setContent(layout);
 
+        //Lista para recoger mas tarde las peliculas
         List<Pelicula> listaPeliculas = new ArrayList();
 
         final DAO dao = new DAO();
 
         try {
+            //Abrimos conexion de BBDD
             dao.abrirConexion();
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
+            //Recogemos las peliculas de BBDD
             listaPeliculas = dao.consultarPeliculas();
         } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,6 +100,7 @@ public class Main extends UI {
             }
         }
 
+        //Creamos una tabla con las columnas: Portada, Titulo, Año, Pais, Duracion
         Table table = new Table();
 
         table.addContainerProperty("Portada", Image.class, null);
@@ -113,6 +121,8 @@ public class Main extends UI {
             table.addItem(new Object[]{portada, p.getTitulo(), p.getAnio(), p.getPais(), p.getDuracion()}, p.getIdPelicula());
         }
 
+        //Metodo para que cuando pinchemos en cualquier fila de la tabla se muestre
+        //una ventana con la informacion detallada de esa pelicula
         table.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
@@ -159,6 +169,7 @@ public class Main extends UI {
             }
         });
 
+        //Declaramos el boton buscar y lo añadimos al layout declarado al principio del codigo
         final TextField buscar = new TextField();
         h1v1.addComponent(buscar);
         Button button1 = new Button("Buscar");
@@ -167,6 +178,7 @@ public class Main extends UI {
             public void buttonClick(Button.ClickEvent event) {
 
                 h2.removeAllComponents();
+                //Creamos una nueva tabla para mostrar las peliculas que coincidan con la busqueda
                 Table table2 = new Table();
 
                 table2.addContainerProperty("Portada", Image.class, null);
@@ -220,6 +232,8 @@ public class Main extends UI {
                         final Window window = new Window("Información detallada:");
                         window.setWidth(700.0f, Sizeable.Unit.PIXELS);
                         final FormLayout content = new FormLayout();
+                        //Metodo para que cuando pinchemos en cualquier fila de la tabla se muestre
+                        //una ventana con la informacion detallada de esa pelicula
                         Label datos = new Label(
                                 "Pelicula del " + p.getAnio() + "," + p.getDuracion() + "min.," + p.getPais() + "<br>"
                                 + "<b>Genero:</b> " + p.getGenero() + "<br>"
@@ -253,6 +267,7 @@ public class Main extends UI {
 
         h2.addComponent(table);
 
+        //Creamos los 3 links de navegacion de la aplicacion y loa añadimos al layout declarado al principio del codigo
         Link pri = new Link("Principal", new ExternalResource("/Principal"));
         Link est = new Link("Graficos", new ExternalResource("/Graficos"));
         Link adm = new Link("Administración", new ExternalResource("/Admin"));
